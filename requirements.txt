@@ -1,0 +1,5 @@
+robotframework
+robotframework-requests
+robotframework-browser
+robotframework-faker
+robotframework-docker
