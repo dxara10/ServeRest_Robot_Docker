@@ -1,17 +1,35 @@
-# Imagem base com Python
 FROM python:3.10-slim
 
-# Diretório de trabalho dentro do container
+# Instala dependências de sistema
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    wget \
+    unzip \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Define diretório de trabalho
 WORKDIR /app
 
-# Copia os arquivos de dependência
-COPY requirements.txt .
+# Instala o Robot Framework e as bibliotecas necessárias
+RUN pip install --no-cache-dir \
+    robotframework \
+    robotframework-requests \
+    robotframework-faker \
+    robotframework-seleniumlibrary
 
-# Instala as dependências
-RUN pip install --no-cache-dir -r requirements.txt
+# Instala o Browser library e seus drivers
+RUN pip install --no-cache-dir robotframework-browser && \
+    rfbrowser init
 
-# Copia todo o conteúdo do projeto para o container
+# Instala Playwright (usado pelo robotframework-browser)
+RUN npm install -g playwright && \
+    playwright install
+
+# Copia os arquivos do projeto para dentro do container
 COPY . .
 
-# Define o comando padrão para executar os testes
-CMD ["robot", "-d", "results", "tests"]
+# Define o comando padrão: executa os testes e salva na pasta de resultados
+CMD ["robot", "--outputdir", "results", "."]

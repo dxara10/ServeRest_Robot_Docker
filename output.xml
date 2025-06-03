@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3 (Python 3.12.7 on linux)" generated="2025-06-03T17:19:44.106116" rpa="false" schemaversion="5">
+<suite id="s1" name="Login Tests" source="/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/tests/login_tests.robot">
+<test id="s1-t1" name="Realizar login com credenciais corretas" line="10">
+<kw name="Criar Sessão" owner="base">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-06-03T17:19:44.514841" level="INFO">Creating Session using : alias=serverest, url=http://54.166.135.1:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>serverest</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-06-03T17:19:44.514357" elapsed="0.002205"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-03T17:19:44.517558" level="INFO">${BASE_URL} = http://54.166.135.1:3000</msg>
+<arg>${BASE_URL}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-03T17:19:44.517054" elapsed="0.000827"/>
+</kw>
+<status status="PASS" start="2025-06-03T17:19:44.512778" elapsed="0.005320"/>
+</kw>
+<kw name="Executar login" owner="login_keyword">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-03T17:19:44.521422" level="INFO">&amp;{payload} = { email=fulano@qa.com | password=teste }</msg>
+<var>&amp;{payload}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-03T17:19:44.519932" elapsed="0.002098"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-03T17:19:44.878125" level="INFO">POST Request : url=http://54.166.135.1:3000/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '36', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=email=fulano%40qa.com&amp;password=teste 
+ </msg>
+<msg time="2025-06-03T17:19:44.878492" level="INFO">POST Response : url=http://54.166.135.1:3000/login 
+ status=200, reason=OK 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '265', 'Date': 'Tue, 03 Jun 2025 20:19:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Login realizado com sucesso",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzQ4OTgxOTg0LCJleHAiOjE3NDg5ODI1ODR9.cPi6GhxPFDy0dBkUYNfAXwyXAOe_WdATls9OPC0qKLQ"
+} 
+ </msg>
+<msg time="2025-06-03T17:19:44.878886" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/login</arg>
+<arg>data=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-03T17:19:44.522539" elapsed="0.356516"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Response: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-03T17:19:44.879515" elapsed="0.001281"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-03T17:19:44.882109" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-03T17:19:44.881296" elapsed="0.001345"/>
+</kw>
+<status status="PASS" start="2025-06-03T17:19:44.518997" elapsed="0.364010"/>
+</kw>
+<tag>POSTlogin</tag>
+<status status="PASS" start="2025-06-03T17:19:44.511184" elapsed="0.372893"/>
+</test>
+<doc>Arquivo de testes para endpoint login</doc>
+<status status="PASS" start="2025-06-03T17:19:44.109640" elapsed="0.777320"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">POSTlogin</stat>
+</tag>
+<suite>
+<stat name="Login Tests" id="s1" pass="1" fail="0" skip="0">Login Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
