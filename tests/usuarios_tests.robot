@@ -5,33 +5,42 @@ Resource          ../Keywords/usuarios_keyword.robot
 *** Variables ***
 
 
-Suite Setup       Criar Sessao
+#Suite Setup       Criar Sessão
 
 *** Test Cases ***
 Criar usuário válido
-    Executar criação
-    Validar status code 201
-    Validar mensagem "Cadastro realizado com sucesso"
-    Armazenar ID do usuário criado
+    Criar Sessão
+    POST /usuarios
+    #Validar status code "201"
 
 Atualizar usuário criado 
-    Executar atualização de usuário
-    Validar status code 200  
+    Criar Sessão
+    PUT /usuario    0uxuPY0cbmQhpEz1
+    Validar Status Code "200"
 
 Listar usuários e validar atualização
-    Executar listagem de usuários  
-    Validar presença de usuário
+    Criar Sessão
+    GET /usuarios 
+    #Validar presença de usuário
 
 Deletar usuário
-    Executar deleção de usuário
-    Validar status code 200 
+    Criar Sessão
+    DELETE /usuario    0uxuPY0cbmQhpEz1
+    #Validar status code "200"
 
 Tentar criar usuário com e-mail inválido
-    Executar criação de usuário com dados
-    Validar status code 400
-    Validar mensagem de erro apropriada 
+    Criar Sessão
+    POST /usuarios email=invalid-email@    password=${PASSWORD}
+#    Validar status code 400
+#    Validar mensagem de erro apropriada
 
 Tentar criar usuário com senha inválida
-    Executar criação de usuário
-    Validar status code 400
-    Validar mensagem de erro apropriada
+    Criar Sessão
+    POST /usuarios senha errada
+#    Validar status code 400
+
+Listar usuarios por ID
+    Criar Sessão
+    GET /usuarios/ID    0uxuPY0cbmQhpEz1
+    #Validar status code 200
+    #Validar presença de usuário

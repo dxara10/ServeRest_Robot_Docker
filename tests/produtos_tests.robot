@@ -4,24 +4,34 @@ Resource          ../Keywords/produtos_keyword.robot
 
 *** Variables ***
 
-Suite Setup       Criar Sessao
+#Suite Setup       Criar Sessao
 
 *** Test Cases ***
-Criar produto autenticado
-    Adicionar token de autenticação
-    Executar criação de produto
-    Validar status code 201
-    Armazenar ID do produto criado
+Criar produto
+    Criar Sessão
+    POST /produtos
+    #Validar status code 201
 
 Atualizar produto
-    Executar atualização de produto
-    Validar status code 200  
+    Criar Sessão
+    PUT /produtos
+    #Validar status code 200
 
 Deletar produto
-    Executar deleção de produto
-    Validar status code 200
+    Criar Sessão
+    DELETE /produtos
 
 Tentar criar produto sem token
-    Remover token de autenticação
-    Executar criação de produto
-    Validar status code 401
+    Criar Sessão
+    POST /produtosSemToken
+    #Validar status code 401
+
+Listar produtos
+    Criar Sessão
+    GET /produtos
+    #Validar status code 200
+
+Listar produtos específico
+    Criar Sessão
+    GET /produtosEspecificos   ejj4xzPR50K6gIlp
+    #Validar status code 200

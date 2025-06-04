@@ -1,82 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3 (Python 3.12.7 on linux)" generated="2025-06-03T17:19:44.106116" rpa="false" schemaversion="5">
-<suite id="s1" name="Login Tests" source="/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/tests/login_tests.robot">
-<test id="s1-t1" name="Realizar login com credenciais corretas" line="10">
+<robot generator="Robot 7.3 (Python 3.12.7 on linux)" generated="2025-06-04T17:28:43.194204" rpa="false" schemaversion="5">
+<suite id="s1" name="Carrinhos Tests" source="/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/tests/carrinhos_tests.robot">
+<test id="s1-t1" name="Criar carrinho" line="11">
 <kw name="Criar Sessão" owner="base">
 <kw name="Create Session" owner="RequestsLibrary">
-<msg time="2025-06-03T17:19:44.514841" level="INFO">Creating Session using : alias=serverest, url=http://54.166.135.1:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg time="2025-06-04T17:28:43.618588" level="INFO">Creating Session using : alias=serverest, url=https://compassuol.serverest.dev/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
 <arg>serverest</arg>
 <arg>${BASE_URL}</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<status status="PASS" start="2025-06-03T17:19:44.514357" elapsed="0.002205"/>
+<status status="PASS" start="2025-06-04T17:28:43.618194" elapsed="0.002287"/>
 </kw>
 <kw name="Set Global Variable" owner="BuiltIn">
-<msg time="2025-06-03T17:19:44.517558" level="INFO">${BASE_URL} = http://54.166.135.1:3000</msg>
+<msg time="2025-06-04T17:28:43.621496" level="INFO">${BASE_URL} = https://compassuol.serverest.dev/</msg>
 <arg>${BASE_URL}</arg>
 <doc>Makes a variable available globally in all tests and suites.</doc>
-<status status="PASS" start="2025-06-03T17:19:44.517054" elapsed="0.000827"/>
+<status status="PASS" start="2025-06-04T17:28:43.620969" elapsed="0.000797"/>
 </kw>
-<status status="PASS" start="2025-06-03T17:19:44.512778" elapsed="0.005320"/>
+<status status="PASS" start="2025-06-04T17:28:43.616731" elapsed="0.005336"/>
 </kw>
-<kw name="Executar login" owner="login_keyword">
+<kw name="POST /carrinhos" owner="carrinho_keyword">
 <kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-06-03T17:19:44.521422" level="INFO">&amp;{payload} = { email=fulano@qa.com | password=teste }</msg>
-<var>&amp;{payload}</var>
-<arg>email=${EMAIL}</arg>
-<arg>password=${PASSWORD}</arg>
+<msg time="2025-06-04T17:28:43.624320" level="INFO">&amp;{header} = { authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzQ5MDY3NzE0LCJleHAiOjE3NDkwNjgzMTR9.qRmQPaXgVriZR3gp9qSspk1RsPHL95AYiQ1...</msg>
+<var>&amp;{header}</var>
+<arg>authorization=${token}</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-06-03T17:19:44.519932" elapsed="0.002098"/>
+<status status="PASS" start="2025-06-04T17:28:43.623420" elapsed="0.001409"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-04T17:28:43.625694" level="INFO">&amp;{payload} = { idPordutos=dtQPE0Yl8grLdBQG | quantidade=1 }</msg>
+<var>&amp;{payload}</var>
+<arg>idPordutos=dtQPE0Yl8grLdBQG</arg>
+<arg>quantidade=1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-04T17:28:43.625157" elapsed="0.000729"/>
 </kw>
 <kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2025-06-03T17:19:44.878125" level="INFO">POST Request : url=http://54.166.135.1:3000/login 
- path_url=/login 
- headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '36', 'Content-Type': 'application/x-www-form-urlencoded'} 
- body=email=fulano%40qa.com&amp;password=teste 
+<msg time="2025-06-04T17:28:43.982952" level="INFO">POST Request : url=https://compassuol.serverest.dev/carrinhos 
+ path_url=/carrinhos 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzQ5MDY3NzE0LCJleHAiOjE3NDkwNjgzMTR9.qRmQPaXgVriZR3gp9qSspk1RsPHL95AYiQ1IKejhhZY', 'Content-Length': '53', 'Content-Type': 'application/json'} 
+ body=b'{"idPordutos": "dtQPE0Yl8grLdBQG", "quantidade": "1"}' 
  </msg>
-<msg time="2025-06-03T17:19:44.878492" level="INFO">POST Response : url=http://54.166.135.1:3000/login 
- status=200, reason=OK 
- headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '265', 'Date': 'Tue, 03 Jun 2025 20:19:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+<msg time="2025-06-04T17:28:43.983346" level="INFO">POST Response : url=https://compassuol.serverest.dev/carrinhos 
+ status=401, reason=Unauthorized 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'bbfd7c4428b5e22aaf6bc138eced9f1d;o=1', 'date': 'Wed, 04 Jun 2025 20:28:43 GMT', 'server': 'Google Frontend', 'Content-Length': '103'} 
  body={
-    "message": "Login realizado com sucesso",
-    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzQ4OTgxOTg0LCJleHAiOjE3NDg5ODI1ODR9.cPi6GhxPFDy0dBkUYNfAXwyXAOe_WdATls9OPC0qKLQ"
+    "message": "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"
 } 
  </msg>
-<msg time="2025-06-03T17:19:44.878886" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<msg time="2025-06-04T17:28:43.983595" level="INFO">/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'compassuol.serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-06-04T17:28:43.983930" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/carrinhos</msg>
 <var>${response}</var>
 <arg>serverest</arg>
-<arg>/login</arg>
-<arg>data=${payload}</arg>
+<arg>/carrinhos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${header}</arg>
 <doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2025-06-03T17:19:44.522539" elapsed="0.356516"/>
+<status status="FAIL" start="2025-06-04T17:28:43.626153" elapsed="0.360932">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/carrinhos</status>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response.status_code}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" start="2025-06-04T17:28:43.987645" elapsed="0.000241"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Response: ${response.content}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-06-03T17:19:44.879515" elapsed="0.001281"/>
+<status status="NOT RUN" start="2025-06-04T17:28:43.988198" elapsed="0.000221"/>
 </kw>
-<kw name="Set Global Variable" owner="BuiltIn">
-<msg time="2025-06-03T17:19:44.882109" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<arg>${response}</arg>
-<doc>Makes a variable available globally in all tests and suites.</doc>
-<status status="PASS" start="2025-06-03T17:19:44.881296" elapsed="0.001345"/>
+<status status="FAIL" start="2025-06-04T17:28:43.622783" elapsed="0.366018">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/carrinhos</status>
 </kw>
-<status status="PASS" start="2025-06-03T17:19:44.518997" elapsed="0.364010"/>
-</kw>
-<tag>POSTlogin</tag>
-<status status="PASS" start="2025-06-03T17:19:44.511184" elapsed="0.372893"/>
+<status status="FAIL" start="2025-06-04T17:28:43.615670" elapsed="0.373806">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/carrinhos</status>
 </test>
-<doc>Arquivo de testes para endpoint login</doc>
-<status status="PASS" start="2025-06-03T17:19:44.109640" elapsed="0.777320"/>
+<doc>Arquivo de testes para endpoint de carrinhos</doc>
+<status status="FAIL" start="2025-06-04T17:28:43.200196" elapsed="0.791354"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0" skip="0">POSTlogin</stat>
 </tag>
 <suite>
-<stat name="Login Tests" id="s1" pass="1" fail="0" skip="0">Login Tests</stat>
+<stat name="Carrinhos Tests" id="s1" pass="0" fail="1" skip="0">Carrinhos Tests</stat>
 </suite>
 </statistics>
 <errors>

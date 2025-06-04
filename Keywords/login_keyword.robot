@@ -16,5 +16,7 @@ Executar login
     ${response}    POST On Session    serverest    /login    data=${payload}
     Log To Console    Response: ${response.content}
     Set Global Variable    ${response}
+    
+
 
 #Validar status code
