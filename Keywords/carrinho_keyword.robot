@@ -1,55 +1,67 @@
 *** Settings ***
 Documentation     Keywords e Variables para ações carrinho_keyword
 Resource          ../support/base.robot
-
-
+Resource          ../Keywords/login_keyword.robot
+Resource          ../Keywords/produtos_keyword.robot
 
 *** Keywords ***
-
 POST /carrinhos
-    &{header}=    Create Dictionary    authorization=${token}
-    &{payload}=   Create Dictionary    idPordutos=dtQPE0Yl8grLdBQG    quantidade=1
-    ${response}=  POST On Session      serverest    /carrinhos    json=${payload}    headers=${header}
-    Status Should Be                  201    ${response.status_code}
-    Log To Console                   Response: ${response.content}
+    ${headers}=    Create Dictionary    Authorization=${token_auth}
 
+    # Cria o dicionário do produto
+    ${produto}=    Create Dictionary    idProduto=${id_produto}    quantidade=1
 
+    # Cria a lista e adiciona o produto
+    @{produtos}=    Create List
+    Append To List    ${produtos}    ${produto}
 
+    # Cria o payload com a lista de produtos
+    ${payload}=    Create Dictionary
+    Set To Dictionary    ${payload}    produtos=${produtos}
 
-
-DELETE /carrinhos
-    &{header}=    Create Dictionary
-    ...    Authorization=${token}        #tornar o token dinâmico
-    ${response}    DELETE On Session    serverest    /carrinhos    headers=${header}
+    # Faz a requisição
+    ${response}=    POST On Session    serverest    /carrinhos    json=${payload}    headers=${headers}
     Log To Console    Response: ${response.content}
     Set Global Variable    ${response}
+    [Return]    ${response}
+    
+Criar Carrinho e Armazenar ID
+    POST /carrinhos
+    Validar Status Code "201"
+    ${id_carrinho}=    Set Variable    ${response.json()["_id"]}
+    Log To Console    ID do Carrinho Salvo: ${id_carrinho}
+    Set Global Variable    ${id_carrinho}
+    Set Global Variable    ${CARRINHO_ID}    ${id_carrinho}
+    [Return]    ${id_carrinho}
 
-adição de produto ID_PRODUTO ao carrinho ID_CARRINHO
-    [Arguments]    ${ID_PRODUTO}    ${ID_CARRINHO}
-    &{header}=    Create Dictionary
-    ...    Authorization=${token}        #tornar o token dinâmico
-    &{payload}=    Create Dictionary    
-    ...    idProduto=${ID_PRODUTO}    
-    ...    quantidade=1
-    ${response}    POST On Session    serverest    /carrinhos/${ID_CARRINHO}/produtos    data=${payload}    headers=${header}
+DELETE /carrinhos/concluir-compra
+    ${headers}=    Create Dictionary
+    ...    Authorization=${token_auth}
+    ${response}=    DELETE On Session    serverest    /carrinhos/concluir-compra    headers=${headers}
     Log To Console    Response: ${response.content}
     Set Global Variable    ${response}
+    [Return]    ${response}
+    
+Concluir Compra e Validar
+    DELETE /carrinhos/concluir-compra
+    Validar Status Code "200"
+    Should Contain    ${response.json()["message"]}    Registro excluído com sucesso
+
+# Este endpoint não existe na API - removendo este keyword
 
 DELETE /carrinhos sem produtos
     &{header}=    Create Dictionary
-    ...    Authorization=${token}        #tornar o token dinâmico
-    ${response}    DELETE On Session    serverest    /carrinhos/sem_produtos    headers=${header}
+    ...    Authorization=${token_auth}
+    ${response}=    DELETE On Session    serverest    /carrinhos/cancelar-compra    headers=${header}
     Log To Console    Response: ${response.content}
     Set Global Variable    ${response}
+    [Return]    ${response}
 
 GET /carrinhos
-    ${response}    GET On Session    serverest    /carrinhos
+    [Arguments]    ${id}=${EMPTY}
+    ${endpoint}=    Set Variable    /carrinhos
+    ${endpoint}=    Set Variable If    "${id}" != "${EMPTY}"    /carrinhos/${id}    ${endpoint}
+    ${response}=    GET On Session    serverest    ${endpoint}
     Log To Console    Response: ${response.content}
     Set Global Variable    ${response}
-
-GET /carrinhos/${ID_CARRINHO}
-    [Arguments]    ${ID_CARRINHO}
-    ${response}    GET On Session    serverest    /carrinhos/${ID_CARRINHO}
-    Log To Console    Response: ${response.content}
-    Set Global Variable    ${response}
-   
+    [Return]    ${response}

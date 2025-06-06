@@ -1,5 +1,7 @@
-robotframework
-robotframework-requests
-robotframework-browser
-robotframework-faker
-robotframework-docker
+robotframework==6.1.1
+robotframework-requests==0.9.5
+robotframework-faker==5.0.0
+robotframework-seleniumlibrary==6.1.0
+robotframework-browser==18.0.0
+requests==2.31.0
+faker==19.3.1
