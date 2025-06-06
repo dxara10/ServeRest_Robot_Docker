@@ -34,6 +34,15 @@ Criar Carrinho e Armazenar ID
     Set Global Variable    ${CARRINHO_ID}    ${id_carrinho}
     [Return]    ${id_carrinho}
 
+adição de produto ID_PRODUTO ao carrinho ID_CARRINHO
+    [Arguments]    ${produto_id}    ${carrinho_id}
+    ${headers}=    Create Dictionary    Authorization=${token_auth}
+    ${endpoint}=    Set Variable    /carrinhos/${carrinho_id}/produtos/${produto_id}
+    ${response}=    POST On Session    serverest    ${endpoint}    headers=${headers}    expected_status=any
+    Log To Console    Response: ${response.content}
+    Set Global Variable    ${response}
+    [Return]    ${response}
+
 DELETE /carrinhos/concluir-compra
     ${headers}=    Create Dictionary
     ...    Authorization=${token_auth}
@@ -46,8 +55,6 @@ Concluir Compra e Validar
     DELETE /carrinhos/concluir-compra
     Validar Status Code "200"
     Should Contain    ${response.json()["message"]}    Registro excluído com sucesso
-
-# Este endpoint não existe na API - removendo este keyword
 
 DELETE /carrinhos sem produtos
     &{header}=    Create Dictionary

@@ -14,11 +14,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Instala o Robot Framework e as bibliotecas necessárias
-RUN pip install --no-cache-dir \
-    robotframework \
-    robotframework-requests \
-    robotframework-faker \
-    robotframework-seleniumlibrary
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Instala o Browser library e seus drivers
 RUN pip install --no-cache-dir robotframework-browser && \
@@ -26,10 +23,18 @@ RUN pip install --no-cache-dir robotframework-browser && \
 
 # Instala Playwright (usado pelo robotframework-browser)
 RUN npm install -g playwright && \
-    playwright install
+    playwright install chromium --with-deps
 
 # Copia os arquivos do projeto para dentro do container
 COPY . .
 
-# Define o comando padrão: executa os testes e salva na pasta de resultados
-CMD ["robot", "--outputdir", "results", "."]
+# Cria links simbólicos para os arquivos JSON no diretório raiz
+RUN ln -sf /app/support/fixtures/static/json_usuario.json /app/json_usuario.json && \
+    ln -sf /app/support/fixtures/static/json_login.json /app/json_login.json
+
+# Define variáveis de ambiente
+ENV PYTHONUNBUFFERED=1
+ENV BASE_URL="http://localhost:3000"
+
+# Define o comando padrão
+CMD ["robot", "--outputdir", "results", "tests"]

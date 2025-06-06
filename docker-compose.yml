@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  serverest:
+    image: paulogoncalvesbh/serverest:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=test
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  robot-tests:
+    build: .
+    depends_on:
+      - serverest
+    volumes:
+      - ./results:/app/results
+    environment:
+      - BASE_URL=http://serverest:3000
+    command: ["robot", "--outputdir", "results", "tests"]

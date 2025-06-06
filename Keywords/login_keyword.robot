@@ -3,6 +3,24 @@ Documentation     Keywords e Variables para ações login_keyword_keyword
 Resource          ../support/base.robot
 
 *** Keywords ***
+Criar Usuario Dinamico
+    ${nome}=    FakerLibrary.Name
+    ${email}=    FakerLibrary.Email
+    ${password}=    FakerLibrary.Password    length=8
+    &{payload}=    Create Dictionary
+    ...    nome=${nome}
+    ...    email=${email}
+    ...    password=${password}
+    ...    administrador=true
+    Log To Console    Usuário criado: ${payload}
+    ${response}=    POST On Session    serverest    /usuarios    json=${payload}    expected_status=any
+    Log To Console    Resposta da criação: ${response.content}
+    Set Global Variable    ${response}
+    Set Global Variable    ${DYNAMIC_EMAIL}    ${email}
+    Set Global Variable    ${DYNAMIC_PASSWORD}    ${password}
+    Run Keyword If    ${response.status_code} == 201    Set Global Variable    ${USUARIO_ID}    ${response.json()["_id"]}
+    [Return]    ${response}
+
 Executar login
     [Arguments]    ${email}=${EMAIL}    ${password}=${PASSWORD}
     &{payload}=    Create Dictionary    
