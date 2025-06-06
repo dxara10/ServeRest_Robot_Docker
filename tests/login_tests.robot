@@ -3,25 +3,35 @@ Documentation     Arquivo de testes para endpoint login
 Resource          ../Keywords/login_keyword.robot
 
 *** Variables ***
+${USUARIO_INEXISTENTE}    naoexiste@example.com
+${SENHA_INCORRETA}        senhaerrada123
 
-#Suite Setup       Criar Sessao
+*** Settings ***
+Suite Setup       Setup Test Suite
+Suite Teardown    Teardown Test Suite
 
 *** Test Cases ***
 Realizar login com credenciais corretas
     [Tags]    POSTlogin
-    Criar Sessão
     Executar login
-    #Validar status code 200
-    #Armazenar token de autenticação
+    Validar Status Code "200"
+    Validar Ter Logado
 
-#Validar tempo de expiração do token
-#    Extrair tempo de expiração do token
-#    Validar expiração do token
+Tentar login com usuário não cadastrado
+    [Tags]    POSTlogin_erro
+    Executar login    email=${USUARIO_INEXISTENTE}
+    Validar Status Code "401"
+    Validar Se Mensagem Contem "Email e/ou senha inválidos"
 
-#Tentar login com usuário não cadastrado
-#    Executar login com usuário inexistente
-#    Validar status code 401  
+Tentar login com senha incorreta
+    [Tags]    POSTlogin_erro
+    Executar login    password=${SENHA_INCORRETA}
+    Validar Status Code "401"
+    Validar Se Mensagem Contem "Email e/ou senha inválidos"
 
-#Tentar login com senha incorreta
-#    Executar login
-#    Validar status code 401      
+*** Keywords ***
+Setup Test Suite
+    Criar Sessão
+
+Teardown Test Suite
+    Log    Finalizando suite de testes de login
