@@ -3,7 +3,8 @@ Documentation     Arquivo de variáveis globais para o projeto
 
 *** Variables ***
 # URLs e endpoints
-${BASE_URL}          http://localhost:3000/
+${BASE_URL}          http://184.72.144.42:3000/
+
 
 # Credenciais padrão
 ${EMAIL}             fulano@qa.com

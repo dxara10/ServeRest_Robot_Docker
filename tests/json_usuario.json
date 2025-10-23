@@ -1,0 +1,26 @@
+{
+    "usuario_valido":{
+        "nome": "JJames da Silva",
+        "email": "jamesbeltrano@qa.com.br",
+        "password": "teste",
+        "administrador": "true"
+    },
+    "usuario_invalido":{
+        "nome": "Invalido da Silva",
+        "email": "fulano@qa.com",
+        "password": "teste",
+        "administrador": "true"
+    },
+    "user_semsenha":{
+        "nome": "Sem Senha da Silva",
+        "email": "judasvacilao@qa.com",
+        "password": "",
+        "administrador": "true"
+    },
+    "user_sememail":{
+        "nome": "Sem Email da Silva",
+        "email": "",
+        "password": "tontosememail",
+        "administrador": "true"
+    }
+}

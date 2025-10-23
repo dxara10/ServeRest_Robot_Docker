@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3 (Python 3.12.7 on linux)" generated="2025-06-06T16:16:29.099531" rpa="false" schemaversion="5">
+<suite id="s1" name="Carrinhos Tests" source="/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/tests/carrinhos_tests.robot">
+<kw name="Setup Test Suite" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:29.648669" level="INFO">Creating Session using : alias=serverest, url=http://184.72.144.42:3000/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>serverest</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=${FALSE}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-06-06T16:16:29.647501" elapsed="0.004074"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:29.653028" level="INFO">${BASE_URL} = http://184.72.144.42:3000/</msg>
+<arg>${BASE_URL}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.652216" elapsed="0.001158"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:29.643198" elapsed="0.010456"/>
+</kw>
+<test id="s1-t1" name="Adicionar produto ao carrinho" line="23">
+<kw name="Configurar Usuario e Login" owner="login_keyword">
+<kw name="Criar Usuario Dinamico" owner="login_keyword">
+<kw name="Name" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:29.659340" level="INFO">${nome} = Kevin Wilson</msg>
+<var>${nome}</var>
+<doc>:example: 'John Doe'</doc>
+<status status="PASS" start="2025-06-06T16:16:29.657772" elapsed="0.002399"/>
+</kw>
+<kw name="Email" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:29.661824" level="INFO">${email} = davischarles@example.com</msg>
+<var>${email}</var>
+<status status="PASS" start="2025-06-06T16:16:29.660722" elapsed="0.001324"/>
+</kw>
+<kw name="Password" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:29.663030" level="INFO">${password} = H%+7A!Ht</msg>
+<var>${password}</var>
+<arg>length=8</arg>
+<doc>Generate a random password of the specified ``length``.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.662322" elapsed="0.000888"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:29.664416" level="INFO">&amp;{payload} = { nome=Kevin Wilson | email=davischarles@example.com | password=H%+7A!Ht | administrador=true }</msg>
+<var>&amp;{payload}</var>
+<arg>nome=${nome}</arg>
+<arg>email=${email}</arg>
+<arg>password=${password}</arg>
+<arg>administrador=true</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.663540" elapsed="0.001119"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Usuário criado: ${payload}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.665130" elapsed="0.001533"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:29.989991" level="INFO">POST Request : url=http://184.72.144.42:3000/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '110', 'Content-Type': 'application/json'} 
+ body=b'{"nome": "Kevin Wilson", "email": "davischarles@example.com", "password": "H%+7A!Ht", "administrador": "true"}' 
+ </msg>
+<msg time="2025-06-06T16:16:29.990729" level="INFO">POST Response : url=http://184.72.144.42:3000/usuarios 
+ status=201, reason=Created 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '82', 'Date': 'Fri, 06 Jun 2025 19:16:29 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "cpMH9VSmplFX5aF7"
+} 
+ </msg>
+<msg time="2025-06-06T16:16:29.991275" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/usuarios</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.667154" elapsed="0.324322"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Resposta da criação: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.992117" elapsed="0.002021"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:29.995866" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.994958" elapsed="0.001246"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:29.997200" level="INFO">${DYNAMIC_EMAIL} = davischarles@example.com</msg>
+<arg>${DYNAMIC_EMAIL}</arg>
+<arg>${email}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.996670" elapsed="0.000802"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:29.998426" level="INFO">${DYNAMIC_PASSWORD} = H%+7A!Ht</msg>
+<arg>${DYNAMIC_PASSWORD}</arg>
+<arg>${password}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.997886" elapsed="0.000802"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.002133" level="INFO">${USUARIO_ID} = cpMH9VSmplFX5aF7</msg>
+<arg>${USUARIO_ID}</arg>
+<arg>${response.json()["_id"]}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.000745" elapsed="0.001792"/>
+</kw>
+<arg>${response.status_code} == 201</arg>
+<arg>Set Global Variable</arg>
+<arg>${USUARIO_ID}</arg>
+<arg>${response.json()["_id"]}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-06T16:16:29.999049" elapsed="0.003753"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-06-06T16:16:30.003026" elapsed="0.000281"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:29.656709" elapsed="0.346928"/>
+</kw>
+<kw name="Fazer login com usuario Dinamico e Armazenar Token" owner="login_keyword">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.006233" level="INFO">&amp;{payload} = { email=davischarles@example.com | password=H%+7A!Ht }</msg>
+<var>&amp;{payload}</var>
+<arg>email=${DYNAMIC_EMAIL}</arg>
+<arg>password=${DYNAMIC_PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.005075" elapsed="0.001711"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Tentando login com: ${payload}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.007673" elapsed="0.000964"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:30.157108" level="INFO">POST Request : url=http://184.72.144.42:3000/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '61', 'Content-Type': 'application/json'} 
+ body=b'{"email": "davischarles@example.com", "password": "H%+7A!Ht"}' 
+ </msg>
+<msg time="2025-06-06T16:16:30.157735" level="INFO">POST Response : url=http://184.72.144.42:3000/login 
+ status=200, reason=OK 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '284', 'Date': 'Fri, 06 Jun 2025 19:16:30 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Login realizado com sucesso",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxpgp-8sJlMjlU"
+} 
+ </msg>
+<msg time="2025-06-06T16:16:30.158506" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/login</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.009047" elapsed="0.149718"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Response: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.159326" elapsed="0.001622"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.162251" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.161435" elapsed="0.001363"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Capturar token" owner="login_keyword">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.167701" level="INFO">${token} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxp...</msg>
+<var>${token}</var>
+<arg>${resp.json()['authorization']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.166346" elapsed="0.001634"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Token: ${token}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.168363" elapsed="0.000611"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.170693" level="INFO">${token_auth} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxp...</msg>
+<arg>${token_auth}</arg>
+<arg>${token}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.169568" elapsed="0.001641"/>
+</kw>
+<kw name="Configurar Autenticação" owner="base">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.174522" level="INFO">&amp;{header} = { authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXS...</msg>
+<var>&amp;{header}</var>
+<arg>authorization=${auth_token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.173523" elapsed="0.001760"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.178061" level="INFO">${HEADERS} = {'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5...</msg>
+<arg>${HEADERS}</arg>
+<arg>${header}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.176004" elapsed="0.002716"/>
+</kw>
+<return>
+<value>${header}</value>
+<status status="PASS" start="2025-06-06T16:16:30.179168" elapsed="0.000302"/>
+</return>
+<arg>${token}</arg>
+<status status="PASS" start="2025-06-06T16:16:30.171954" elapsed="0.008040"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-06-06T16:16:30.180287" elapsed="0.000245"/>
+</return>
+<arg>${response}</arg>
+<status status="PASS" start="2025-06-06T16:16:30.165142" elapsed="0.015942"/>
+</kw>
+<arg>${response.status_code} == 200</arg>
+<arg>Capturar token</arg>
+<arg>${response}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.163347" elapsed="0.018059"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-06-06T16:16:30.181659" elapsed="0.000289"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:30.004125" elapsed="0.178320"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:29.655566" elapsed="0.527210"/>
+</kw>
+<kw name="Criar Produto Dinamico" owner="produtos_keyword">
+<kw name="POST /produtos_dinamicos" owner="dynamics">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.186353" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5...</msg>
+<var>${headers}</var>
+<arg>Authorization=${token_auth}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.185551" elapsed="0.005564"/>
+</kw>
+<kw name="Criar Dados Produto Aleatorio" owner="dynamics">
+<kw name="Word" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:30.195077" level="INFO">${nome_produto} = agency</msg>
+<var>${nome_produto}</var>
+<doc>Generate a word.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.193458" elapsed="0.002258"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.199413" level="INFO">${random_suffix} = 1749237390199</msg>
+<var>${random_suffix}</var>
+<arg>int(time.time() * 1000)</arg>
+<arg>time</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.197364" elapsed="0.002536"/>
+</kw>
+<kw name="Sentence" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:30.201073" level="INFO">${descricao} = Right some matter glass keep wide mission state me difference.</msg>
+<var>${descricao}</var>
+<arg>nb_words=10</arg>
+<doc>Generate a sentence.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.200368" elapsed="0.000922"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.202283" level="INFO">${preco} = 3171</msg>
+<var>${preco}</var>
+<arg>random.randint(10, 5000)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.201697" elapsed="0.000816"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.203309" level="INFO">${quantidade} = 48</msg>
+<var>${quantidade}</var>
+<arg>random.randint(1, 100)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.202819" elapsed="0.000659"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.204833" level="INFO">${payload} = {'nome': 'Produto agency_1749237390199', 'preco': 3171, 'descricao': 'Right some matter glass keep wide mission state me difference.', 'quantidade': 48}</msg>
+<var>${payload}</var>
+<arg>nome=Produto ${nome_produto}_${random_suffix}</arg>
+<arg>preco=${preco}</arg>
+<arg>descricao=${descricao}</arg>
+<arg>quantidade=${quantidade}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.203902" elapsed="0.001232"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Produto criado: ${payload}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.205627" elapsed="0.000684"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2025-06-06T16:16:30.206826" elapsed="0.000375"/>
+</return>
+<msg time="2025-06-06T16:16:30.207978" level="INFO">${payload} = {'nome': 'Produto agency_1749237390199', 'preco': 3171, 'descricao': 'Right some matter glass keep wide mission state me difference.', 'quantidade': 48}</msg>
+<var>${payload}</var>
+<status status="PASS" start="2025-06-06T16:16:30.192204" elapsed="0.016250"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:30.946887" level="INFO">POST Request : url=http://184.72.144.42:3000/produtos 
+ path_url=/produtos 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxpgp-8sJlMjlU', 'Content-Length': '152', 'Content-Type': 'application/json'} 
+ body=b'{"nome": "Produto agency_1749237390199", "preco": 3171, "descricao": "Right some matter glass keep wide mission state me difference.", "quantidade": 48}' 
+ </msg>
+<msg time="2025-06-06T16:16:30.947643" level="INFO">POST Response : url=http://184.72.144.42:3000/produtos 
+ status=201, reason=Created 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '82', 'Date': 'Fri, 06 Jun 2025 19:16:30 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "xFOukMMUWjjTN4Mz"
+} 
+ </msg>
+<msg time="2025-06-06T16:16:30.948104" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/produtos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.209428" elapsed="0.738857"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Response: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.948810" elapsed="0.001056"/>
+</kw>
+<kw name="Convert To String" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.951074" level="INFO">${status_code} = 201</msg>
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.950219" elapsed="0.001064"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.952006" level="INFO">${retry_count} = 0</msg>
+<var>${retry_count}</var>
+<arg>0</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.951693" elapsed="0.000461"/>
+</kw>
+<while condition="${status_code} == &quot;400&quot; and ${retry_count} &lt; 3">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Produto já existe, tentando com outro nome...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:30.953002" elapsed="0.000129"/>
+</kw>
+<kw name="Criar Dados Produto Aleatorio" owner="dynamics">
+<var>${payload}</var>
+<status status="NOT RUN" start="2025-06-06T16:16:30.953469" elapsed="0.000172"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/produtos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:30.953903" elapsed="0.000160"/>
+</kw>
+<kw name="Convert To String" owner="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:30.954315" elapsed="0.000125"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${retry_count}</var>
+<arg>${retry_count} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:30.954721" elapsed="0.000153"/>
+</kw>
+<status status="NOT RUN" start="2025-06-06T16:16:30.952330" elapsed="0.003047"/>
+</iter>
+<status status="NOT RUN" start="2025-06-06T16:16:30.952317" elapsed="0.003355"/>
+</while>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.958067" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.956788" elapsed="0.001631"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-06-06T16:16:30.958717" elapsed="0.000364"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:30.184774" elapsed="0.774947"/>
+</kw>
+<kw name="Validar Status Code &quot;201&quot;" owner="common" source_name="Validar Status Code &quot;${statuscode}&quot;">
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == ${statuscode}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.961601" elapsed="0.001851"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:30.960638" elapsed="0.003381"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.966564" level="INFO">${id_produto} = xFOukMMUWjjTN4Mz</msg>
+<var>${id_produto}</var>
+<arg>${response.json()["_id"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.964805" elapsed="0.003704"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>ID do Produto Dinâmico Salvo: ${id_produto}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.969127" elapsed="0.000709"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.971123" level="INFO">${id_produto} = xFOukMMUWjjTN4Mz</msg>
+<arg>${id_produto}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.970419" elapsed="0.001077"/>
+</kw>
+<return>
+<value>${id_produto}</value>
+<status status="PASS" start="2025-06-06T16:16:30.971782" elapsed="0.000289"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:30.183725" elapsed="0.788886"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.974204" level="INFO">${produto_id1} = xFOukMMUWjjTN4Mz</msg>
+<var>${produto_id1}</var>
+<arg>${id_produto}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.973486" elapsed="0.001018"/>
+</kw>
+<kw name="Criar Produto Dinamico" owner="produtos_keyword">
+<kw name="POST /produtos_dinamicos" owner="dynamics">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.980351" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5...</msg>
+<var>${headers}</var>
+<arg>Authorization=${token_auth}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.979510" elapsed="0.001153"/>
+</kw>
+<kw name="Criar Dados Produto Aleatorio" owner="dynamics">
+<kw name="Word" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:30.983354" level="INFO">${nome_produto} = produce</msg>
+<var>${nome_produto}</var>
+<doc>Generate a word.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.982415" elapsed="0.001289"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.985048" level="INFO">${random_suffix} = 1749237390984</msg>
+<var>${random_suffix}</var>
+<arg>int(time.time() * 1000)</arg>
+<arg>time</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.984262" elapsed="0.001083"/>
+</kw>
+<kw name="Sentence" owner="FakerLibrary">
+<msg time="2025-06-06T16:16:30.986699" level="INFO">${descricao} = Before production provide past play person cause I stage say than concern.</msg>
+<var>${descricao}</var>
+<arg>nb_words=10</arg>
+<doc>Generate a sentence.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.985800" elapsed="0.001248"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.988351" level="INFO">${preco} = 3735</msg>
+<var>${preco}</var>
+<arg>random.randint(10, 5000)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.987613" elapsed="0.001106"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.990300" level="INFO">${quantidade} = 82</msg>
+<var>${quantidade}</var>
+<arg>random.randint(1, 100)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.989384" elapsed="0.001268"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:30.992758" level="INFO">${payload} = {'nome': 'Produto produce_1749237390984', 'preco': 3735, 'descricao': 'Before production provide past play person cause I stage say than concern.', 'quantidade': 82}</msg>
+<var>${payload}</var>
+<arg>nome=Produto ${nome_produto}_${random_suffix}</arg>
+<arg>preco=${preco}</arg>
+<arg>descricao=${descricao}</arg>
+<arg>quantidade=${quantidade}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.991481" elapsed="0.001672"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Produto criado: ${payload}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.993750" elapsed="0.000949"/>
+</kw>
+<return>
+<value>${payload}</value>
+<status status="PASS" start="2025-06-06T16:16:30.995155" elapsed="0.000294"/>
+</return>
+<msg time="2025-06-06T16:16:30.996108" level="INFO">${payload} = {'nome': 'Produto produce_1749237390984', 'preco': 3735, 'descricao': 'Before production provide past play person cause I stage say than concern.', 'quantidade': 82}</msg>
+<var>${payload}</var>
+<status status="PASS" start="2025-06-06T16:16:30.981445" elapsed="0.015178"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:31.160484" level="INFO">POST Request : url=http://184.72.144.42:3000/produtos 
+ path_url=/produtos 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxpgp-8sJlMjlU', 'Content-Length': '165', 'Content-Type': 'application/json'} 
+ body=b'{"nome": "Produto produce_1749237390984", "preco": 3735, "descricao": "Before production provide past play person cause I stage say than concern.", "quantidade": 82}' 
+ </msg>
+<msg time="2025-06-06T16:16:31.161159" level="INFO">POST Response : url=http://184.72.144.42:3000/produtos 
+ status=201, reason=Created 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '82', 'Date': 'Fri, 06 Jun 2025 19:16:31 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "1X6MNNrsu0QlBpNb"
+} 
+ </msg>
+<msg time="2025-06-06T16:16:31.161924" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/produtos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-06T16:16:30.997374" elapsed="0.164879"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Response: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.163396" elapsed="0.002320"/>
+</kw>
+<kw name="Convert To String" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.167930" level="INFO">${status_code} = 201</msg>
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.166343" elapsed="0.002005"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.170232" level="INFO">${retry_count} = 0</msg>
+<var>${retry_count}</var>
+<arg>0</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.169489" elapsed="0.001151"/>
+</kw>
+<while condition="${status_code} == &quot;400&quot; and ${retry_count} &lt; 3">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Produto já existe, tentando com outro nome...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:31.172455" elapsed="0.000262"/>
+</kw>
+<kw name="Criar Dados Produto Aleatorio" owner="dynamics">
+<var>${payload}</var>
+<status status="NOT RUN" start="2025-06-06T16:16:31.173561" elapsed="0.000348"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/produtos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:31.174470" elapsed="0.000323"/>
+</kw>
+<kw name="Convert To String" owner="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:31.175348" elapsed="0.000220"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${retry_count}</var>
+<arg>${retry_count} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-06-06T16:16:31.176287" elapsed="0.000318"/>
+</kw>
+<status status="NOT RUN" start="2025-06-06T16:16:31.171186" elapsed="0.005795"/>
+</iter>
+<status status="NOT RUN" start="2025-06-06T16:16:31.171177" elapsed="0.006099"/>
+</while>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.178687" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.177880" elapsed="0.001415"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-06-06T16:16:31.179710" elapsed="0.000413"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:30.978543" elapsed="0.202350"/>
+</kw>
+<kw name="Validar Status Code &quot;201&quot;" owner="common" source_name="Validar Status Code &quot;${statuscode}&quot;">
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == ${statuscode}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.182780" elapsed="0.002492"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:31.181864" elapsed="0.003786"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.187616" level="INFO">${id_produto} = 1X6MNNrsu0QlBpNb</msg>
+<var>${id_produto}</var>
+<arg>${response.json()["_id"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.186158" elapsed="0.001784"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>ID do Produto Dinâmico Salvo: ${id_produto}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.188520" elapsed="0.000967"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.191268" level="INFO">${id_produto} = 1X6MNNrsu0QlBpNb</msg>
+<arg>${id_produto}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.190386" elapsed="0.001398"/>
+</kw>
+<return>
+<value>${id_produto}</value>
+<status status="PASS" start="2025-06-06T16:16:31.192157" elapsed="0.000359"/>
+</return>
+<status status="PASS" start="2025-06-06T16:16:30.976878" elapsed="0.216292"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.195918" level="INFO">${produto_id2} = 1X6MNNrsu0QlBpNb</msg>
+<var>${produto_id2}</var>
+<arg>${id_produto}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.194564" elapsed="0.002354"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.202769" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5...</msg>
+<var>${headers}</var>
+<arg>Authorization=${token_auth}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.201305" elapsed="0.001947"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.209690" level="INFO">${produto1} = {'idProduto': 'xFOukMMUWjjTN4Mz', 'quantidade': '1'}</msg>
+<var>${produto1}</var>
+<arg>idProduto=${produto_id1}</arg>
+<arg>quantidade=1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.208146" elapsed="0.002279"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.213994" level="INFO">${produto2} = {'idProduto': '1X6MNNrsu0QlBpNb', 'quantidade': '2'}</msg>
+<var>${produto2}</var>
+<arg>idProduto=${produto_id2}</arg>
+<arg>quantidade=2</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.212933" elapsed="0.001415"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.217954" level="INFO">@{produtos} = [ {'idProduto': 'xFOukMMUWjjTN4Mz', 'quantidade': '1'} | {'idProduto': '1X6MNNrsu0QlBpNb', 'quantidade': '2'} ]</msg>
+<var>@{produtos}</var>
+<arg>${produto1}</arg>
+<arg>${produto2}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.217056" elapsed="0.001230"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.221443" level="INFO">${payload} = {'produtos': [{'idProduto': 'xFOukMMUWjjTN4Mz', 'quantidade': '1'}, {'idProduto': '1X6MNNrsu0QlBpNb', 'quantidade': '2'}]}</msg>
+<var>${payload}</var>
+<arg>produtos=${produtos}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.219900" elapsed="0.001883"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:31.387725" level="INFO">POST Request : url=http://184.72.144.42:3000/carrinhos 
+ path_url=/carrinhos 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdmlzY2hhcmxlc0BleGFtcGxlLmNvbSIsInBhc3N3b3JkIjoiSCUrN0EhSHQiLCJpYXQiOjE3NDkyMzczOTAsImV4cCI6MTc0OTIzNzk5MH0.4w0W0-CY7VSQ5PXSuAw2NIU-VlloFHxpgp-8sJlMjlU', 'Content-Length': '122', 'Content-Type': 'application/json'} 
+ body=b'{"produtos": [{"idProduto": "xFOukMMUWjjTN4Mz", "quantidade": "1"}, {"idProduto": "1X6MNNrsu0QlBpNb", "quantidade": "2"}]}' 
+ </msg>
+<msg time="2025-06-06T16:16:31.388120" level="INFO">POST Response : url=http://184.72.144.42:3000/carrinhos 
+ status=201, reason=Created 
+ headers={'Access-Control-Allow-Origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '82', 'Date': 'Fri, 06 Jun 2025 19:16:31 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "hRHYzORLTsdhy2J8"
+} 
+ </msg>
+<msg time="2025-06-06T16:16:31.388513" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/carrinhos</arg>
+<arg>json=${payload}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.222565" elapsed="0.166092"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.389725" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.389314" elapsed="0.000679"/>
+</kw>
+<kw name="Validar Status Code &quot;201&quot;" owner="common" source_name="Validar Status Code &quot;${statuscode}&quot;">
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == ${statuscode}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.392075" elapsed="0.002625"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:31.390837" elapsed="0.004333"/>
+</kw>
+<kw name="Validar Se Mensagem Contem &quot;Cadastro realizado com sucesso&quot;" owner="common" source_name="Validar Se Mensagem Contem &quot;${palavra}&quot;">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response.json()["message"]}</arg>
+<arg>${palavra}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.397964" elapsed="0.001399"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:31.396384" elapsed="0.003274"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:29.653967" elapsed="1.746320"/>
+</test>
+<kw name="Teardown Test Suite" type="TEARDOWN">
+<kw name="Delete All Sessions" owner="RequestsLibrary">
+<msg time="2025-06-06T16:16:31.404467" level="INFO">Deleting All Sessions</msg>
+<doc>Removes all the session objects</doc>
+<status status="PASS" start="2025-06-06T16:16:31.404151" elapsed="0.000780"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-06-06T16:16:31.405880" level="INFO">Finalizando suite de testes de carrinhos</msg>
+<arg>Finalizando suite de testes de carrinhos</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-06-06T16:16:31.405379" elapsed="0.000849"/>
+</kw>
+<status status="PASS" start="2025-06-06T16:16:31.403412" elapsed="0.003129"/>
+</kw>
+<doc>Arquivo de testes para endpoint de carrinhos</doc>
+<status status="PASS" start="2025-06-06T16:16:29.108001" elapsed="2.298753"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Carrinhos Tests" id="s1" pass="1" fail="0" skip="0">Carrinhos Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-06-06T16:16:29.144105" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 26: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.144562" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 35: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.144949" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 44: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.145144" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 52: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.145388" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 65: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.145752" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/carrinho_keyword.robot' on line 74: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.147802" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/support/base.robot' on line 19: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.321521" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/support/common/common.robot' on line 18: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.327916" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/support/fixtures/dynamics.robot' on line 17: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.328388" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/support/fixtures/dynamics.robot' on line 40: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.328720" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/support/fixtures/dynamics.robot' on line 62: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.619357" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/login_keyword.robot' on line 22: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.619837" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/login_keyword.robot' on line 33: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.620115" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/login_keyword.robot' on line 44: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.620543" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/login_keyword.robot' on line 60: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.625265" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 18: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.625747" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 27: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.626144" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 39: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.626444" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 47: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.626862" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 61: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.627153" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 67: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.627511" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 74: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.627832" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/produtos_keyword.robot' on line 85: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.633398" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 16: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.633799" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 23: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.634131" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 28: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.634429" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 34: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.634678" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 40: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.635052" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 51: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.635376" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 62: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-06-06T16:16:29.635697" level="WARN">Error in file '/home/cortes/Documents/Compass Estágio/ServeRest_Robot_Docker/Keywords/usuarios_keyword.robot' on line 73: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>
